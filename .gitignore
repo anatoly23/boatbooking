@@ -1,3 +1,6 @@
 .venv
 __pycache__/
 *.yaml
+.vscode
+.env
+*.db
