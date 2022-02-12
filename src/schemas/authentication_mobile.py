@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from src.schemas.captain import Captain
 
 
-class AuthenticationMobile(BaseModel):
+class AuthenticationMobile(Captain):
     phone: str
     code: str

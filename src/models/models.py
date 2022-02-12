@@ -1,9 +1,65 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 from src.db.database import Base
 
 
-class User(Base):
-    __tablename__ = "users"
+class Captain(Base):
+    __tablename__ = 'captains'
 
     id = Column(Integer, primary_key=True, index=True)
     phone = Column(String, unique=True, index=True)
+    raiting = Column(Float)
+    boat_id = relationship('Boat', backref='captains', uselist=False)
+
+
+class Boat(Base):
+    __tablename__ = 'boats'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    boat_raiting = Column(Float)
+    cost = Column(Float)
+    captain_id = Column(Integer, ForeignKey('captains.id'))
+    pier_id = relationship('Pier', backref='boats')
+    image_id = relationship('Image', backref='boats')
+    order_id = relationship('Order', backref='boats')
+
+
+class Pier(Base):
+    __tablename__ = 'piers'
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    lat = Column(Float)
+    lon = Column(Float)
+    boat_id = Column(Integer, ForeignKey('boats.id'))
+    order_id = relationship('Order', backref='piers')
+
+
+class Image(Base):
+    __tablename__ = 'images'
+
+    id = Column(Integer, primary_key=True, index=True)
+    image = Column(String)
+    boat_id = Column(Integer, ForeignKey('boats.id'))
+
+
+class Client(Base):
+    __tablename__ = 'clients'
+
+    id = Column(Integer, primary_key=True, index=True)
+    phone = Column(String, unique=True, index=True)
+    order_id = relationship('Order', backref='clients')
+
+
+class Order(Base):
+    __tablename__ = 'orders'
+
+    id = Column(Integer, primary_key=True, index=True)
+    comment = Column(String)
+    time_created = Column(DateTime())
+    order_state = Column(Integer)
+    minTimeOrder = Column(Integer)
+    client_id = Column(Integer, ForeignKey('clients.id'))
+    boat_id = Column(Integer, ForeignKey('boats.id'))
+    pier_id = Column(Integer, ForeignKey('piers.id'))

@@ -1,1 +1,1 @@
-from .models import User
+from .models import Captain, Boat, Pier, Image, Client, Order
