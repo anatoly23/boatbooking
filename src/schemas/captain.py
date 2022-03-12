@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 # Shared properties
 # class UserBase(BaseModel):
 #     phone: Optional[str] = None

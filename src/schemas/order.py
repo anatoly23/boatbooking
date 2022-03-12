@@ -10,3 +10,7 @@ class Order(BaseModel):
     timeCreated: str
     orderState: int
     minTimeOrder: int
+
+
+class Id(BaseModel):
+    orderId: int
