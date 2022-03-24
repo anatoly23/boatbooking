@@ -1,1 +1,1 @@
-from .models import Boat, Captain, Client, Image, Order, Pier
+from .models import Boat, Captain, Client, Image, Order, Pier, BoatCoordinate
