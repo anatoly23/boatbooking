@@ -1,5 +1,3 @@
-from traceback import print_tb
-from unittest import async_case
 from src import schemas
 from typing import Dict, List
 from fastapi import WebSocket
