@@ -14,3 +14,19 @@ class Order(BaseModel):
 
 class Id(BaseModel):
     orderId: int
+
+
+from pydantic import BaseModel
+
+
+class TypePayment(BaseModel):
+    typePayment: int
+    idCard: int
+
+
+class SetOrder(BaseModel):
+    idBoat: int
+    idPier: int
+    comment: str
+    typePayment: TypePayment
+    minTimeOrder: int

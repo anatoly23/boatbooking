@@ -12,29 +12,32 @@ from src.core.dependencies import (
 router = APIRouter()
 
 
-@router.post("/register", tags=["captain"])
-async def register(captain: schemas.Captain, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_phone(db, phone=captain.phone)
+@router.post("/client/register", tags=["customer"])
+async def register(client: schemas.Client, db: Session = Depends(get_db)):
+    db_user = crud.get_client(db, phone=client.phone)
     if db_user:
+        raise HTTPException(status_code=201, detail="Sucess")
+    else:
+        crud.create_client(db, client.phone)
         raise HTTPException(status_code=201, detail="Sucess")
     raise HTTPException(status_code=400, detail="Acess denied")
 
 
 @router.post(
-    "/login",
+    "/client/login",
     response_model=schemas.Token,
     status_code=status.HTTP_201_CREATED,
-    tags=["captain"],
+    tags=["customer"],
 )
-async def login(captain: schemas.AuthenticationMobile, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_phone(db, phone=captain.phone)
+async def login(client: schemas.AuthenticationMobile, db: Session = Depends(get_db)):
+    db_user = crud.get_client(db, phone=client.phone)
     if not db_user:
         raise HTTPException(status_code=400, detail="Acess denied")
-    if captain.code != "0":
+    if client.code != "0":
         raise HTTPException(status_code=401, detail="Auth problem")
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        {"phone": captain.phone, "code": captain.code},
+        {"phone": client.phone, "code": client.code},
         expires_delta=access_token_expires,
     )
     return schemas.Token(

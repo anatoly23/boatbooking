@@ -6,6 +6,6 @@ templates = Jinja2Templates(directory="src/templates")
 router = APIRouter()
 
 
-@router.get("/map", response_class=HTMLResponse)
+@router.get("/map", response_class=HTMLResponse, tags=["map"])
 async def map(request: Request):
     return templates.TemplateResponse("map.html", {"request": request})

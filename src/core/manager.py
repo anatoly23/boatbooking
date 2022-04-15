@@ -12,10 +12,10 @@ class ConnectionManager:
         if phone in self.active_connections:
             self.disconnect(phone)
         self.active_connections[phone] = websocket
-        print(f"Капитан {phone} подключился. WS: {self.active_connections[phone]}")
+        print(f"{phone} подключился. WS: {self.active_connections[phone]}")
 
     def disconnect(self, phone: schemas.Captain):
-        print(f"Капитан {phone} отключился. WS: {self.active_connections[phone]}")
+        print(f"{phone} отключился. WS: {self.active_connections[phone]}")
         self.active_connections.pop(phone)
 
     async def send_personal_message(self, message: str, phone: schemas.Captain):
@@ -27,7 +27,7 @@ class ConnectionManager:
 
     async def list_capitans(self):
         for phone, connection in self.active_connections.items():
-            print(f"Капитан: {phone}, подключение {connection}")
+            print(f"{phone}, подключение {connection}")
 
 
 class BoatManager:
