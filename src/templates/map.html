@@ -75,14 +75,27 @@
 
             webSocket.onmessage = function (event) {
 
-                var coords = JSON.parse(event.data);
+                let coords = JSON.parse(event.data);
 
-                if (boats[coords.boat_id]) {
-                    boats[coords.boat_id].setLatLng([coords.latitude, coords.longitude])
+                if (coords.status == "connected") {
+                    console.log(coords.status)
+
+
+                    if (boats[coords.boat_id]) {
+                        boats[coords.boat_id].setLatLng([coords.latitude, coords.longitude])
+                    }
+                    else {
+                        boats[coords.boat_id] = L.marker([coords.latitude, coords.longitude], { icon: svgIcon }).addTo(map)
+                    }
                 }
-                else {
-                    boats[coords.boat_id] = L.marker([coords.latitude, coords.longitude], { icon: svgIcon }).addTo(map)
+
+                if (coords.status == "disconnected") {
+                    console.log(coords.status)
+                    boats[coords.boat_id].remove()
+                    delete boats[coords.boat_id]
                 }
+
+
 
             }
 

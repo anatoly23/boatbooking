@@ -91,3 +91,4 @@ class BoatCoordinate(Base):
     latitude = Column(Float)
     state = Column(Integer)
     boat_id = Column(Integer, ForeignKey("boats.id"))
+    boat_speed = Column(Float)

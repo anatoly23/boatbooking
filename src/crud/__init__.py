@@ -21,8 +21,9 @@ from .crud import (
     get_current_order,
     get_order_by_id,
     get_boat_coordinates,
-    # get_client_order,
+    get_boats_coordinates,
     get_piers_all,
     get_ordedrs_by_date,
     get_orders_by_time,
+    get_boat_on_map,
 )

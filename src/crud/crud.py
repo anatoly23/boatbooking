@@ -27,6 +27,18 @@ def get_boat(db: Session, capitan_id: int):
     return boat
 
 
+def get_boat_on_map(db, boat_id):
+    boat = (
+        db.query(models.Boat, models.Captain, models.BoatCoordinate)
+        .join(models.Captain, models.Captain.id == models.Boat.captain_id)
+        .join(models.BoatCoordinate, models.BoatCoordinate.boat_id == models.Boat.id)
+        .filter(models.Boat.id == boat_id)
+        .one()
+    )
+
+    return boat
+
+
 def get_captain(db: Session, id):
     return db.query(models.Captain).filter(models.Captain.id == id).first()
 
@@ -56,7 +68,9 @@ def get_pier(db: Session, pier_id: int):
 
 
 def get_pier_images(db: Session, pier_id: int):
-    images = db.query(models.Image).filter(models.Image.boat_id == pier_id).all()
+    images = (
+        db.query(models.PierImage).filter(models.PierImage.pier_id == pier_id).all()
+    )
     return images
 
 
@@ -85,15 +99,6 @@ def get_current_order(db: Session, client_id):
 def get_order_by_id(db: Session, orderId):
     order = db.query(models.Order).filter(models.Order.id == orderId).one()
     return order
-
-
-# def get_client_order(db: Session, client_id):
-#     return (
-#         db.query(models.Order)
-#         .filter(models.Order.client_id == client_id)
-#         .order_by(models.Order.time_created)
-#         .all()
-#     )
 
 
 def set_order(
@@ -139,7 +144,12 @@ def set_captain_reject(db: Session, id: int):
 
 
 def set_boat_coordinate(
-    db: Session, longitude: float, latitude: float, state: int, boat_id: int
+    db: Session,
+    longitude: float,
+    latitude: float,
+    state: int,
+    boat_id: int,
+    boat_speed: float,
 ):
     db.query(models.BoatCoordinate).filter(
         models.BoatCoordinate.boat_id == boat_id
@@ -149,6 +159,7 @@ def set_boat_coordinate(
             "latitude": latitude,
             "state": state,
             "boat_id": boat_id,
+            "boat_speed": boat_speed,
         },
     )
     db.commit()
@@ -159,6 +170,13 @@ def get_boat_coordinates(db: Session, boat_id):
         db.query(models.BoatCoordinate)
         .filter(models.BoatCoordinate.boat_id == boat_id)
         .one()
+    )
+
+
+def get_boats_coordinates(db: Session):
+    return (
+        # db.query(models.BoatCoordinate).filter(models.BoatCoordinate.state == 1).all()
+        db.query(models.BoatCoordinate).all()
     )
 
 
