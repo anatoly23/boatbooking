@@ -5,7 +5,6 @@ This's a backend for a boat booking mobile app
 
 
 ## Installation
-_____
 
 Clone this repository: 
 
@@ -21,7 +20,6 @@ SECRET_KEY = 'your secret key'
 
 
 ## Usage
-____
 
  
 Start the app by running 
