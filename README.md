@@ -12,7 +12,7 @@ Clone this repository:
 git clone https://github.com/anatoly23/boatbooking.git
 ```
 
-You should generate a token and put it in the .env file 
+You should generate a token and put it in a .env file 
 
 ```
 SECRET_KEY = 'your secret key'
